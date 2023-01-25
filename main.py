@@ -2,21 +2,17 @@ import config
 import telebot
 import openai
 import ast
-import string
+import re
 
 bot = telebot.TeleBot(config.telegram_api_key)
 openai.api_key = config.openai_api_key
 
 
-# check message length and symbols
 def message_checker(message):
-    if len(message) > 45:
-        return False, 'Слишком длинный текст, введите слово или фразу длиной до 45 символов'
-    characters = string.ascii_letters + string.digits + string.punctuation + ' '
-    for character in message:
-        if character not in characters:
-            return False, 'Хм, я неуверен, что в этом тексте только английские буквы и символы... Попробуйте еще раз.'
-    return True,
+    if len(message) > 45 or not re.match("^[A-Za-z0-9 .,!?'\";:-]+$", message):
+        return False
+    else:
+        return True
 
 
 #  Requesting OpenAI translation in dictionary format with keys: 'definition', 'translations', 'emoji', 'examples'
@@ -64,8 +60,7 @@ def send_welcome(message):
 # Inbound telegram messages
 @bot.message_handler(func=lambda message: True)
 def echo_all(message):
-    check_message = message_checker(message.text)
-    if check_message[0]:  # if message OK - send answer
+    if message_checker(message.text):  # if message OK - send answer
         bot.send_chat_action(message.chat.id, 'typing')
         translation = request_openai_translation(message.text)
 
@@ -84,7 +79,7 @@ def echo_all(message):
             bot.send_message(message.chat.id, 'Сорри йа, что-то пошло не так, попробуйте еще разок...')
 
     else:
-        bot.send_message(message.chat.id, check_message[1])  # if message to long or not only EN symbols send - send error
+        bot.send_message(message.chat.id, "Введите слово или фразу на английском языке и не более 45 символов")  # if message to long or not only EN symbols send - send error
 
 
 bot.polling()
