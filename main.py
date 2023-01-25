@@ -4,6 +4,7 @@ import openai
 import ast
 import string
 
+# test 25
 bot = telebot.TeleBot(config.telegram_api_key)
 openai.api_key = config.openai_api_key
 
