@@ -42,7 +42,7 @@ def generate_picture(word):
         response = openai.Image.create(
             prompt=word,
             n=1,
-            size="256x256"
+            size="256x256"  # 256x256, 512x512, 1024x1024
         )
         return response['data'][0]['url']
     except Exception as e:
@@ -54,7 +54,8 @@ def generate_picture(word):
 @bot.message_handler(commands=['start', 'help'])
 def send_welcome(message):
     print(message)
-    bot.reply_to(message, f'👋 Привет, {message.from_user.first_name}!\n\nЯ бот, который переводит слова с английского на русский с помощью ChatGPT. Пришли мне любое слово, а я его переведу!')
+    bot.reply_to(message,
+                 f'👋 Привет, {message.from_user.first_name}!\n\nЯ бот, который переводит слова с английского на русский с помощью ChatGPT. Пришли мне любое слово, а я его переведу!')
 
 
 # Inbound telegram messages
@@ -79,7 +80,8 @@ def echo_all(message):
             bot.send_message(message.chat.id, 'Сорри йа, что-то пошло не так, попробуйте еще разок...')
 
     else:
-        bot.send_message(message.chat.id, "Введите слово или фразу на английском языке и не более 45 символов")  # if message to long or not only EN symbols send - send error
+        bot.send_message(message.chat.id,
+                         "Введите слово или фразу на английском языке и не более 45 символов")  # if message to long or not only EN symbols send - send error
 
 
 bot.polling()
