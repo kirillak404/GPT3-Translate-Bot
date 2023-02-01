@@ -84,4 +84,4 @@ def echo_all(message):
                          "Введите слово или фразу на английском языке и не более 45 символов")  # if message to long or not only EN symbols send - send error
 
 
-bot.polling()
+bot.infinity_polling()
