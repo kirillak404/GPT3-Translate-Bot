@@ -37,17 +37,17 @@ def request_openai_translation(word):
 
 
 # Requesting OpenAI generate picture
-def generate_picture(word):
-    try:
-        response = openai.Image.create(
-            prompt=word,
-            n=1,
-            size="256x256"  # 256x256, 512x512, 1024x1024
-        )
-        return response['data'][0]['url']
-    except Exception as e:
-        print(e)
-        return False
+# def generate_picture(word):
+#     try:
+#         response = openai.Image.create(
+#             prompt=word,
+#             n=1,
+#             size="256x256"  # 256x256, 512x512, 1024x1024
+#         )
+#         return response['data'][0]['url']
+#     except Exception as e:
+#         print(e)
+#         return False
 
 
 # Inbound telegram commands (/start and /help)
@@ -64,17 +64,12 @@ def echo_all(message):
     if message_checker(message.text):  # if message OK - send answer
         bot.send_chat_action(message.chat.id, 'typing')
         translation = request_openai_translation(message.text)
+        bot.send_chat_action(message.chat.id, 'typing')
 
         if translation:  # if correct translation returned form openAI func
-            bot.send_chat_action(message.chat.id, 'typing')
-            image_url = generate_picture(translation['definition'])
             examples = "".join([f'- _{example}_\n' for example in translation['examples']])
             answer = f"""{translation['emoji']} *{translation['word']}* [{translation['transcription']}] – {translation['definition']}\n\n*Popularity:* {translation['frequency']} of 100\n*Translation:* {translation['translations']}\n\n*Examples*\n{examples}"""
-
-            if image_url:  # if picture returned from OpenAI pic func, then send photo+text
-                bot.send_photo(message.chat.id, image_url, caption=answer, parse_mode="markdown")
-            else:  # if no picture send only text
-                bot.send_message(message.chat.id, answer, parse_mode="markdown")
+            bot.send_message(message.chat.id, answer, parse_mode="markdown")
 
         else:  # if False returned form openAI text func
             bot.send_message(message.chat.id, 'Сорри йа, что-то пошло не так, попробуйте еще разок...')
@@ -85,3 +80,4 @@ def echo_all(message):
 
 
 bot.infinity_polling()
+
