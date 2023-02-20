@@ -80,9 +80,9 @@ def echo_all(message):
 
         if translation:  # if received translation from openAI func – send it to user
             examples = "".join([f'- _{example}_\n' for example in translation['examples']])
-            answer = f"""{translation['emoji']} *{translation['word']}* [{translation['transcription']}] 
-            – {translation['definition']}\n\n*Popularity:* {translation['frequency']} of 100\n
-            *Translation:* {translation['translations']}\n\n*Examples*\n{examples}"""
+            answer = f"{translation['emoji']} *{translation['word']}* [{translation['transcription']}] " \
+            f"– {translation['definition']}\n\n*Popularity:* {translation['frequency']} of 100\n" \
+            f"*Translation:* {translation['translations']}\n\n*Examples*\n{examples}"
 
             bot.send_message(message.chat.id, answer, parse_mode="markdown")
 
