@@ -2,13 +2,17 @@
 
 This Telegram bot translates words from English to Russian using the OpenAI GPT-3 API. The bot provides the meaning of the word, its transcription, popularity, translation variants, and usage examples.
 
-![Alt Text](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/de14abb7-2783-47ea-bf94-036b95e16467/IMG_1728.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230220%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230220T040802Z&X-Amz-Expires=86400&X-Amz-Signature=3b925f53fe3e28a4545b5f3f4b5cfb66ed618c60ff59466d5845ce3930fccd2d&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22IMG_1728.PNG.png%22&x-id=GetObject)
+![Alt Text](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3821b291-75d3-47dd-954f-fa8fcf7520df/frogly-translates.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230227%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230227T105015Z&X-Amz-Expires=86400&X-Amz-Signature=485dfe56ea000c3abae74910ccde35e024173559bf4361b82e5657a94f377a9c&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22frogly-translates.png%22&x-id=GetObject)
 
 
 ## Requirements
-* Python 3.7 or higher
-* telebot module
+* Python 3.11
+* pyTelegramBotAPI module
+* psycopg2-binary module
+* openai module
+* Telegram Bot token
 * OpenAI API key
+* PostgreSQL DB with word's frequency
 
 ## Usage
 1. Run the bot by running python bot.py in the terminal.

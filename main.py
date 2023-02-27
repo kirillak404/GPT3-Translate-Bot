@@ -12,6 +12,7 @@ DB_URI = os.environ.get('DATABASE_URL')
 
 
 def check_word_frequency(word):
+    # This function returns the rank of a word in the top 5000 popular words in American English
     word = word.lower()
 
     with psycopg2.connect(DB_URI, sslmode="require") as conn:
@@ -102,8 +103,8 @@ def send_welcome(message):
 def echo_all(message):
     if message_checker(message.text):  # checks the message for compliance with the rules
         bot.send_chat_action(message.chat.id, 'typing')
-        translation = request_openai_translation(message.text)
-        frequency = check_word_frequency(message.text)
+        translation = request_openai_translation(message.text)  # requesting translation from OpenAI
+        frequency = check_word_frequency(message.text)  # requesting word frequency if exists
 
         if frequency:
             frequency = f'*Frequency:* {frequency} of 5062\n'
