@@ -1,12 +1,38 @@
-import config
+import os
 import telebot
 import openai
 import ast
 import re
-import sqlite3
+import psycopg2
 
-bot = telebot.TeleBot(config.telegram_api_key)
-openai.api_key = config.openai_api_key
+
+bot = telebot.TeleBot(os.environ.get('telegram_api_key'))
+openai.api_key = os.environ.get('openai_api_key')
+DB_URI = os.environ.get('DATABASE_URL')
+
+
+def check_word_frequency(word):
+    word = word.lower()
+
+    with psycopg2.connect(DB_URI, sslmode="require") as conn:
+
+        with conn.cursor() as cur:
+            cur.execute("SELECT rank FROM words WHERE word = %s LIMIT 1", (word,))
+
+            result = cur.fetchone()
+            if result:
+                return result[0]
+
+            cur.execute("SELECT rank "
+                        "FROM words "
+                        "WHERE inflections LIKE %s OR inflections LIKE %s OR inflections LIKE %s "
+                        "LIMIT 1",
+                        (f"{word}, %", f"%, {word}, %", f"%, {word}",))
+            result = cur.fetchone()
+
+    if result:
+        return result[0]
+    return False
 
 
 def message_checker(message):
@@ -15,32 +41,6 @@ def message_checker(message):
         return False
     else:
         return True
-
-
-def check_word_frequency(word):
-    # Connect to the database
-    with sqlite3.connect('database.db') as conn:
-        c = conn.cursor()
-
-        # Execute a SELECT query to retrieve all the rows from the table
-        c.execute('SELECT * FROM words WHERE word = ? LIMIT 1', (word,))
-
-        # Fetch the first row returned by the query
-        result = c.fetchone()
-
-        if result:
-            return result
-
-        # Execute another SELECT query to search for inflections
-        c.execute('SELECT * FROM words WHERE inflections LIKE ? OR inflections LIKE ? OR inflections LIKE ? LIMIT 1',
-                  (f"{word}, %", f"%, {word}, %", f"%, {word}"))
-
-        # Fetch the first row returned by the query
-        result = c.fetchone()
-
-    if result:
-        return result
-    return False
 
 
 def request_openai_translation(word):
@@ -106,7 +106,7 @@ def echo_all(message):
         frequency = check_word_frequency(message.text)
 
         if frequency:
-            frequency = f'*Frequency:* {frequency[0]} of 5062\n'
+            frequency = f'*Frequency:* {frequency} of 5062\n'
 
         if translation:  # if received translation from openAI func – send it to user
             examples = "".join([f'- _{example}_\n' for example in translation['examples']])
