@@ -2,7 +2,7 @@
 
 This Telegram bot translates words from English to Russian using the OpenAI GPT-3 API. The bot provides the meaning of the word, its transcription, popularity, translation variants, and usage examples.
 
-![Alt Text](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/3821b291-75d3-47dd-954f-fa8fcf7520df/frogly-translates.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230227%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230227T105015Z&X-Amz-Expires=86400&X-Amz-Signature=485dfe56ea000c3abae74910ccde35e024173559bf4361b82e5657a94f377a9c&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22frogly-translates.png%22&x-id=GetObject)
+![GPT3-Translate-Bot](https://s3.us-west-2.amazonaws.com/secure.notion-static.com/7f269142-16dc-4e59-ba8c-7823679fe85e/frogly-translates.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20230227%2Fus-west-2%2Fs3%2Faws4_request&X-Amz-Date=20230227T110632Z&X-Amz-Expires=86400&X-Amz-Signature=a412a4bc1087885606d2b746a30d06d65ac923bd0f98f036774464a0d186476c&X-Amz-SignedHeaders=host&response-content-disposition=filename%3D%22frogly-translates.png%22&x-id=GetObject)
 
 
 ## Requirements
